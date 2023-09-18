@@ -76,7 +76,7 @@ void display(GLFWwindow* window, double currentTime) {
     // But loads onto the hardware.
 
     glPointSize(300.0f);
-    glDrawArrays(GL_POINTS, 0, 1); // Initiates pipeline processing
+    glDrawArrays(GL_TRIANGLES, 0, 3); // Initiates pipeline processing
     // Primitive is a GL_Point, only one point to display
 }
 int main(void) {
