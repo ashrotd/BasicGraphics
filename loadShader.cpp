@@ -1,35 +1,49 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
 #define numVAOs 1
 GLuint renderingProgram; //GLuint means unsigned integer
 GLuint vao[numVAOs];
-GLuint createShaderProgram() {
-    const char *vshaderSource =
-    "#version 410 \n"
-    "void main(void) \n"
-    "{ gl_Position = vec4(0.0, 0.0, 0.0, 1.0); }"; //Coordinates in 3D
-    
-    //Rasterization process transfers this coordinates to pixel Locations(fragments)
 
-    const char *fshaderSource =
-    "#version 410 \n"
-    "out vec4 color; \n" // Color is an output
-    "void main(void) \n"
-    "{ color = vec4(0.0, 0.0, 1.0, 1.0); }";
+string readShaderSource(const char *filePath){
+    string content;
+    ifstream fileStream(filePath,ios::in);
+    string line="";
+
+    while(!fileStream.eof()){
+        getline(fileStream,line);
+        content.append(line+"\n");
+    }
+    fileStream.close();
+    return content;
+}
+
+GLuint createShaderProgram() {
+    
     
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER); 
     //Generates Vertex shader empty object and returns an integer ID
     // That ID is stored in vShader and fShader 
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
 
+    string vertShaderStr = readShaderSource("vertShader.glsl");
+    string fragShaderStr = readShaderSource("fragShader.glsl");
+
+    const char *vertShaderSrc = vertShaderStr.c_str();
+    const char *fragShaderSrc = fragShaderStr.c_str();
+    
+
     //This process loades the GLSL code from string to empty shader
     //object.
-    glShaderSource(vShader, 1, &vshaderSource, NULL);
-    glShaderSource(fShader, 1, &fshaderSource, NULL);
+    
+    glShaderSource(vShader, 1, &vertShaderSrc, NULL);
+    glShaderSource(fShader, 1, &fragShaderSrc, NULL);
 
     //After loading, it compiles the code
     glCompileShader(vShader);
