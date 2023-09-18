@@ -11,11 +11,13 @@ GLuint createShaderProgram() {
     const char *vshaderSource =
     "#version 410 \n"
     "void main(void) \n"
-    "{ gl_Position = vec4(0.0, 0.0, 0.0, 1.0); }"; 
-  
+    "{ gl_Position = vec4(0.0, 0.0, 0.0, 1.0); }"; //Coordinates in 3D
+    
+    //Rasterization process transfers this coordinates to pixel Locations(fragments)
+
     const char *fshaderSource =
     "#version 410 \n"
-    "out vec4 color; \n" 
+    "out vec4 color; \n" // Color is an output
     "void main(void) \n"
     "{ color = vec4(0.0, 0.0, 1.0, 1.0); }";
     
