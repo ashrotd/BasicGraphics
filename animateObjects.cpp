@@ -81,16 +81,17 @@ void display(GLFWwindow* window, double currentTime) {
     // loads the program containing two compiled shaders
     // into OpenGL pipeline state (onto GPU!)
     glUseProgram(renderingProgram); // It doesn't run shaders
-    // But loads onto the hardware.
+        // But loads onto the hardware.
 
     x += inc;
     if(x>1.0f){   // move the triangle along x axis
-    if (x > 1.0f) inc = -0.01f; // switch to moving the triangle to the left
+    // switch to moving the triangle to the left
         inc=-0.01f; 
     }
     if(x<-1.0f){
         inc = 0.01f;
     }
+    
     GLuint offsetLoc = glGetUniformLocation(renderingProgram,"offset"); //get pointer to offset from vertex shader
     
     glProgramUniform1f(renderingProgram,offsetLoc,x); //Send value x to offset
@@ -100,8 +101,6 @@ void display(GLFWwindow* window, double currentTime) {
 }
 int main(void) {
     if (!glfwInit()) { exit(EXIT_FAILURE); }
-
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); //Checking version 4.1
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     
